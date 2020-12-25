@@ -1,6 +1,6 @@
 //types of actions
-export default UPLOAD_SUCCESS = 'UPLOAD_SUCCESS';
-export default UPLOAD_FAIL='UPLOAD_FAIL';
+export const UPLOAD_SUCCESS = 'UPLOAD_SUCCESS';
+export const UPLOAD_FAIL='UPLOAD_FAIL';
 
 
 

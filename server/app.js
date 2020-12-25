@@ -4,7 +4,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
-import path, { resolve } from 'path';
+import path from 'path';
 import multer from 'multer';
 import GridfsStorage from 'multer-gridfs-storage';
 import Grid from 'gridfs-stream';
@@ -58,17 +58,13 @@ const storage=new GridfsStorage({
 //multer upload
 const upload=multer ({storage});
 
-//@route GET /home
-//@desc home page
-app.get(`/`,(req,res)=>{
-    //home page
-})
 
 
 //@route POST /upload
 //@desc upload files
 app.post(`/upload`,upload.single('file'), (req,res)=>{
     //upload file
+    res.redirect(`/addfile`);
     
 })
 
