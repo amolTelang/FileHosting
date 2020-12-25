@@ -7,8 +7,6 @@ const Addfile=()=> {
 
     const onChange=e=>{
         setFile(e.target.files[0]);
-
-
     }
 
     const onSubmit=async e=>{
