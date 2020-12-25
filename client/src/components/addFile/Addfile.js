@@ -1,6 +1,8 @@
 import React,{Fragment,useState} from 'react'
 import {addFile} from '../../actions/addFile';
-const Addfile=()=> {
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+const Addfile=({addFile})=> {
     const [file,setFile]=useState('')
 
 
@@ -45,4 +47,9 @@ const Addfile=()=> {
     )
 }
 
-export default Addfile
+Addfile.propTypes={
+  addFile:PropTypes.func.isRequired
+}
+
+
+export default connect(null,{addFile})(Addfile)

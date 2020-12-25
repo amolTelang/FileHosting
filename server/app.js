@@ -63,7 +63,10 @@ const upload=multer ({storage});
 //@route POST /upload
 //@desc upload files
 app.post(`/upload`,upload.single('file'), (req,res)=>{
+    //receiving file from frontend
+    const file=req.files.file;
     //upload file
+    upload.single(`file`);
     res.redirect(`/addfile`);
     
 })

@@ -2,7 +2,7 @@ import {UPLOAD_SUCCESS,UPLOAD_FAIL} from './types';
 import axios from 'axios'
 
 
-export const addFile=(formData)=>dispatch=>{
+export const addFile=(formData)=>async dispatch=>{
   const config={
     headers:{
         'Content-Type':'multipart/form-data'
