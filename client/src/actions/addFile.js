@@ -9,6 +9,7 @@ export const addFile=(formData)=>dispatch=>{
     }
    }
     try {
+       
         axios.post(`/upload`,formData,config);
         dispatch({
             type:UPLOAD_SUCCESS,

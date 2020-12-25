@@ -7,15 +7,10 @@ export default function(state=initialState,action)
     switch(type)
     {
         case 'UPLOAD_SUCCESS':
-            return{
-
-            }
-        case 'UPLOAD_FAIL':
-            return{
-
-            }
-
+            return console.log(`success`)
             
+        case 'UPLOAD_FAIL':
+            return console.log(`fail`)
         default:
             return state;
     }
