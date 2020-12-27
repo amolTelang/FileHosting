@@ -15,7 +15,7 @@ const Addfile=({addFile})=> {
         e.preventDefault();
         const formData=new FormData();
         formData.append('file',file);
-        console.log(...formData);
+
         addFile(formData);
     }
     return (
