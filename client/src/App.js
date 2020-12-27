@@ -20,8 +20,10 @@ function App() {
     <Provider store={store}>
     <Router>
     <Fragment>
+    <Switch>
       <Route exact path='/test' component={Home}/>
       <Route exact path='/' component={Addfile}/>
+      </Switch>
     </Fragment>
     </Router>
     </Provider>

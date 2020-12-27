@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import {Redirect} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 // import PropTypes from 'prop-types'
 
 const Home=()=> {
@@ -9,9 +9,9 @@ const Home=()=> {
     search:''
   })
 
-  
-  //destructuring
-  const{search}=searchData;
+  //destructuring;
+  const {search}=searchData;
+
 
 
 
@@ -42,7 +42,7 @@ const Home=()=> {
 </div>  
   </div>
   <div>
-    <button  class='flex mx-auto mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg' onClick={<Redirect to='/addfile'/>}>Add file</button>
+    <Link  className='flex mx-auto mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg' to='/'>Add file</Link>
   </div>
 </section>
 

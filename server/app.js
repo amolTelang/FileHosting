@@ -10,8 +10,6 @@ import GridfsStorage from 'multer-gridfs-storage';
 import Grid from 'gridfs-stream';
 import methodOverride from 'method-override';
 import cors from 'cors';
-import fileUpload from 'express-fileupload';
-import crypto from 'crypto';
 //init express app
 const app=express();
 
@@ -24,7 +22,7 @@ const connect=mongoose.createConnection(mongoURI,{ useNewUrlParser: true ,useUni
 app.use(bodyParser.json());
 app.use(methodOverride('_method'));
 app.use(cors());
-// app.use(fileUpload());
+
 
 //init gridfs
 let gfs;
@@ -57,18 +55,55 @@ const upload=multer ({storage});
 //@route POST /upload
 //@desc upload files
 app.post(`/upload`,upload.single('file'),(req,res)=>{
-    //receiving file from frontend
-    //   const file = req.files.file;
-      console.log(req.file);
-      
-    // res.send(`${file.name}`)
     res.send(`success`);
     
        
       });
       
     
+//@route GET /files/filename
+//desc get a file by filename
+app.get('/files/:filename', (req, res) => {
+    gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+      // Check if file
+      if (!file || file.length === 0) {
+        return res.status(404).json({
+          err: 'No file exists'
+        });
+      }
+      // File exists
+      return res.json(file);
+    });
+  });
 
+
+// @route DELETE /files/:id
+// @desc  Delete file by passing file id
+app.delete('/files/:id', (req, res) => {
+    gfs.remove({ _id: req.params.id, root: 'uploads' }, (err, gridStore) => {
+      if (err) {
+        return res.status(404).json({ err: err });
+      }
+  
+      res.send('deleted successfully')
+    });
+  });
+
+//@route GET /files
+//@desc get all files
+app.get('/files', (req, res) => {
+    gfs.files.find().toArray((err, files) => {
+      // Check if files
+      if (!files || files.length === 0) {
+        return res.status(404).json({
+          err: 'No files exist'
+        });
+      }
+  
+      // Files exist
+      return res.json(files);
+    });
+  });
 
 //init PORT variable
 const PORT=process.env.PORT||3001
