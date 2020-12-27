@@ -1,25 +1,30 @@
-import {SEARCH_REQ,SEACRH_FAIL} from './types';
+import {SEARCH_REQ,SEARCH_FAIL} from './types';
 import axios from 'axios';
 
 
 
 
-export default searchFile =()=>async dispatch =>{
+export const searchFile =(filename)=>async dispatch =>{
 
-    const config={
-        headers:{
-            'Content-Type': 'application/json'
-        }
-    }
-    const body=JSON.stringify({search});
+    // const config={
+    //     headers:{
+    //         'Content-Type': 'application/json'
+    //     }
+    // }
+    // const filename=JSON.stringify({search});
 
     try {
-        const res=await axios.get(`http://localhost:3001/upload/file/`)
+        const res=await axios.get(`http://localhost:3001/files/${filename}`)
+        dispatch({
+            type:SEARCH_REQ,
+            payload:res.data
+        })
 
     } catch (error) {
         console.error(error);
         dispatch({
-            type:SEACRH_FAIL
+            type:SEARCH_FAIL,
+            payload:'fail'
         })
 
     }

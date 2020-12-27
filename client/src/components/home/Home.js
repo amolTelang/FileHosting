@@ -1,8 +1,10 @@
 import React,{useState} from 'react'
 import {Link} from 'react-router-dom'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
+import {connect} from 'react-redux';
+import {searchFile} from '../../actions/searchFile';
 
-const Home=()=> {
+const Home=({searchFile})=> {
 
   //hooks
   const[searchData,setSearchData]=useState({
@@ -11,7 +13,7 @@ const Home=()=> {
 
   //destructuring;
   const {search}=searchData;
-
+  
 
 
 
@@ -28,18 +30,19 @@ const Home=()=> {
     </div>
 
 
-  <div className='p-8'>
+  <form className='p-8'>
   <div className='bg-white flex items-center rounded-full shadow-xl'>
     <input className='rounded-l-full w-full py-4 px-6 text-gray-700 leading-tight focus:outline-none'  type='text' placeholder='Search' name='search' value={search} onChange={e => setSearchData({...searchData,search:e.target.value})} required />
     
     <div className='p-4'>
-      <button className='bg-white-500 text-white rounded-full p-2 hover:bg-gray-400 focus:outline-none w-12 h-12 flex items-center justify-center'>
+      <input type='submit' className='bg-white-500 text-white rounded-full p-2 hover:bg-gray-400 focus:outline-none w-12 h-12 flex items-center justify-center'>
          {/* add search icon */}
          //
-      </button>
+      </input>
       </div>
   </div>
-</div>  
+</form>  
+
   </div>
   <div>
     <Link  className='flex mx-auto mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg' to='/'>Add file</Link>
@@ -52,6 +55,9 @@ const Home=()=> {
     )
 }
 
+Home.propTypes={
+searchFile:PropTypes.func.isRequired
 
-export default Home
+}
+export default connect(null,{searchFile})(Home);
 
