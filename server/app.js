@@ -80,7 +80,7 @@ app.get('/files/:filename', (req, res) => {
 // @route DELETE /files/:id
 // @desc  Delete file by passing file id
 app.delete('/files/:id', (req, res) => {
-    gfs.remove({ _id: req.params.id, root: 'uploads' }, (err, gridStore) => {
+    gfs.remove({ _id: req.params.id, root: 'uploads' }, (err, gridFSBucket) => {
       if (err) {
         return res.status(404).json({ err: err });
       }
@@ -104,6 +104,51 @@ app.get('/files', (req, res) => {
       return res.json(files);
     });
   });
+
+
+//@route GET /files/download/:filename
+//download file from the database
+app.get('/files/download/:filename', (req, res) => {
+  // Check file exist on MongoDB
+ 
+//   var filename = req.params.filename;
+//     console.log(filename);
+//   gfs.exist({ filename: filename }, (err, file) => {
+//       if (err || !file) {
+//           res.status(404).send('File Not Found');
+//   return
+//       } 
+
+// var readstream = gfs.createReadStream({ filename: filename });
+// readstream.pipe(res);            
+//   });
+
+gfs.collection('uploads'); //set collection name to lookup into
+
+    /** First check if file exists */
+    gfs.files.find({filename: req.params.filename}).toArray(function(err, files){
+        if(!files || files.length === 0){
+            return res.status(404).json({
+                responseCode: 1,
+                responseMessage: "error"
+            });
+        }
+        // create read stream
+        var readstream = gfs.createReadStream({
+            filename: files[0].filename,
+            root: 'uploads'
+        });
+        // set the proper content type 
+        res.set('Content-Type', files[0].contentType)
+        // Return response
+        return readstream.pipe(res);
+    });
+
+
+});  
+  
+
+
 
 //init PORT variable
 const PORT=process.env.PORT||3001

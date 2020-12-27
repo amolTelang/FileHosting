@@ -1,4 +1,6 @@
-import {SEARCH_REQ,SEARCH_FAIL} from '../actions/types';
+import {SEARCH_REQ,
+    SEARCH_FAIL,
+    DOWNLOAD} from '../actions/types';
 
 const initialState={
     file:[],
@@ -10,7 +12,10 @@ export default function(state=initialState,action)
 {
     const {type,payload}=action;
     switch(type)
-    {
+    {   case DOWNLOAD:
+        return{
+            ...state
+        }
         case SEARCH_REQ:   
         return{
 
