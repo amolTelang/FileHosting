@@ -1,10 +1,11 @@
-import React,{useState} from 'react'
+import React,{Fragment,useState} from 'react'
 import {Link} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux';
 import {searchFile} from '../../actions/searchFile';
+import File from '../../components/file/File';
 
-const Home=({searchFile})=> {
+const Home=({searchFile,searchCompleted})=> {
 
   //hooks
   const[searchData,setSearchData]=useState({
@@ -13,7 +14,12 @@ const Home=({searchFile})=> {
 
   //destructuring;
   const {search}=searchData;
-  
+
+
+   const onSubmit= async e=>{
+     e.preventDefault();
+     searchFile(search)
+   }
 
 
 
@@ -21,7 +27,7 @@ const Home=({searchFile})=> {
 
     return (
     
-    
+    <>
         <section className='text-gray-700 body-font'>
   <div className='container px-5 py-24 mx-auto'>
     <div className='flex flex-wrap w-full mb-20 flex-col items-center text-center'>
@@ -30,24 +36,32 @@ const Home=({searchFile})=> {
     </div>
 
 
-  <form className='p-8'>
+  <form onSubmit={e=>onSubmit(e)} className='p-8'>
   <div className='bg-white flex items-center rounded-full shadow-xl'>
     <input className='rounded-l-full w-full py-4 px-6 text-gray-700 leading-tight focus:outline-none'  type='text' placeholder='Search' name='search' value={search} onChange={e => setSearchData({...searchData,search:e.target.value})} required />
     
     <div className='p-4'>
-      <input type='submit' className='bg-white-500 text-white rounded-full p-2 hover:bg-gray-400 focus:outline-none w-12 h-12 flex items-center justify-center'>
-         {/* add search icon */}
-         //
-      </input>
+      <input type='submit' className='bg-blue-400 text-white rounded-full p-2 hover:bg-gray-400 focus:outline-none w-12 h-12 flex items-center justify-center'/>
       </div>
   </div>
 </form>  
-
-  </div>
-  <div>
-    <Link  className='flex mx-auto mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg' to='/'>Add file</Link>
   </div>
 </section>
+  <div className='flex items-center justify-center'>
+    {
+    searchCompleted ? <File/>:(<h1>...</h1>)
+  }
+    </div>
+ 
+
+    
+ 
+  
+
+<div>
+    <Link  className='flex mx-auto mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg' to='/addfile'>Add file</Link>
+  </div>
+</>
 
 
 
@@ -59,5 +73,8 @@ Home.propTypes={
 searchFile:PropTypes.func.isRequired
 
 }
-export default connect(null,{searchFile})(Home);
+
+const mapStateToProps=state=>({searchCompleted:state.searchFile.searchCompleted})
+  
+export default connect(mapStateToProps,{searchFile})(Home);
 

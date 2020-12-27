@@ -21,8 +21,8 @@ function App() {
     <Router>
     <Fragment>
     <Switch>
-      <Route exact path='/test' component={Home}/>
-      <Route exact path='/' component={Addfile}/>
+      <Route exact path='/' component={Home}/>
+      <Route exact path='/addfile' component={Addfile}/>
       </Switch>
     </Fragment>
     </Router>
