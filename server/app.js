@@ -9,8 +9,8 @@ import multer from 'multer';
 import GridfsStorage from 'multer-gridfs-storage';
 import Grid from 'gridfs-stream';
 import methodOverride from 'method-override';
-
-
+import cors from 'cors';
+import fileUpload from 'express-fileupload';
 //init express app
 const app=express();
 
@@ -32,6 +32,8 @@ const connect=mongoose.createConnection(mongoURI,{ useNewUrlParser: true ,useUni
 //middlewares
 app.use(bodyParser.json());
 app.use(methodOverride('_method'));
+app.use(cors());
+app.use(fileUpload());
 
 //init gridfs
 let gfs;
@@ -62,12 +64,21 @@ const upload=multer ({storage});
 
 //@route POST /upload
 //@desc upload files
-app.post(`/upload`,upload.single('file'), (req,res)=>{
+app.post(`/upload`, (req,res)=>{
     //receiving file from frontend
-    const file=req.files.file;
-    //upload file
-    upload.single(`file`);
-    res.redirect(`/addfile`);
+      const file = req.files.file;
+    //   console.log(file);
+       
+     
+      file.mv(`./uploads/${file.name}`, err => {
+        if (err) {
+          console.error(err);
+          return res.status(500).send(err);
+        }
+    
+       
+      });
+      
     
 })
 

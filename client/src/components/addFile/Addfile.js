@@ -14,7 +14,8 @@ const Addfile=({addFile})=> {
     const onSubmit=async e=>{
         e.preventDefault();
         const formData=new FormData();
-        formData.append(`file`,file);
+        formData.append('file',file);
+        console.log(...formData);
         addFile(formData);
     }
     return (
@@ -37,7 +38,7 @@ const Addfile=({addFile})=> {
     </svg>
     <span className='mt-2 text-base leading-normal'>Select a file</span>
 
-    <input type='file'  className='hidden' onChange={onChange}/>   
+    <input type='file' name='file'  className='hidden' onChange={onChange}/>   
   </label>
   <input type='submit' className="bg-gray-500 items-center hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-full"/>
   

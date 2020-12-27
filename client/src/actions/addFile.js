@@ -10,7 +10,8 @@ export const addFile=(formData)=>async dispatch=>{
    }
     try {
        
-        axios.post(`/upload`,formData,config);
+         const res=await axios.post(`http://localhost:3001/upload`,formData,config);
+         console.log(res);
         dispatch({
             type:UPLOAD_SUCCESS,
             payload:'success'
