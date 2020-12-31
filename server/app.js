@@ -72,7 +72,9 @@ app.get('/files/:filename', (req, res) => {
         });
       }
       // File exists
+      console.log(file);
       return res.json(file);
+
     });
   });
 
@@ -109,20 +111,6 @@ app.get('/files', (req, res) => {
 //@route GET /files/download/:filename
 //download file from the database
 app.get('/files/download/:filename', (req, res) => {
-  // Check file exist on MongoDB
- 
-//   var filename = req.params.filename;
-//     console.log(filename);
-//   gfs.exist({ filename: filename }, (err, file) => {
-//       if (err || !file) {
-//           res.status(404).send('File Not Found');
-//   return
-//       } 
-
-// var readstream = gfs.createReadStream({ filename: filename });
-// readstream.pipe(res);            
-//   });
-
 gfs.collection('uploads'); //set collection name to lookup into
 
     /** First check if file exists */
@@ -142,6 +130,8 @@ gfs.collection('uploads'); //set collection name to lookup into
         res.set('Content-Type', files[0].contentType)
         // Return response
         return readstream.pipe(res);
+        console,log('test');
+        
     });
 
 
